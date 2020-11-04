@@ -2116,6 +2116,12 @@ class Xmap:
         pass
 
     @staticmethod
+    def from_file(file):
+        ccp4 = gemmi.read_ccp4_map(str(file))
+        ccp4.setup()
+        return Xmap(ccp4.grid)
+    
+    @staticmethod
     def from_unaligned_dataset(dataset: Dataset, alignment: Alignment, grid: Grid, structure_factors: StructureFactors,
                                sample_rate: float = 3.0):
         
