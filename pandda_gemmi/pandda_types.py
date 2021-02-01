@@ -2226,7 +2226,7 @@ class Xmap:
         spacing = [self.xmap.nu, self.xmap.nv, self.xmap.nw]
         unit_cell = self.xmap.unit_cell
         grid = gemmi.FloatGrid(spacing[0], spacing[1], spacing[2])
-        grid.unit_cell = unit_cell
+        grid.set_unit_cell(unit_cell)
         grid.spacegroup = self.xmap.spacegroup
         return grid
     
@@ -2277,8 +2277,8 @@ class Xmap:
             com_moving_list.append(com_moving)
             com_reference_list.append(com_reference)
                 
-                    
-
+        #print('Unaligned Xmap')            
+        #print(np.array(unaligned_xmap))
         # Interpolate values
         interpolated_grid = gemmi.interpolate_points(unaligned_xmap,
                                  new_grid,
@@ -2288,9 +2288,12 @@ class Xmap:
                                  com_moving_list,
                                  com_reference_list,
                                  )
-
-
-        return Xmap(new_grid)
+        #print('Interpolated_Grid')
+        #print(np.array(interpolated_grid))
+        #print('New Grid')
+        #print(np.array(new_grid))
+        #return Xmap(new_grid)
+        return Xmap(interpolated_grid)
 
     @staticmethod
     def from_aligned_map(event_map_reference_grid: gemmi.FloatGrid,
